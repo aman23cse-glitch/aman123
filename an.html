@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Coin Exchange </title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#111;
+    font-family:Arial,sans-serif;
+}
+
+.phone{
+    width:390px;
+    max-width:100%;
+    min-height:100vh;
+    margin:auto;
+    background:#fff;
+}
+
+.header{
+    height:60px;
+    display:flex;
+    align-items:center;
+    padding:0 16px;
+    border-bottom:1px solid #eee;
+}
+
+.back{
+    font-size:30px;
+    margin-right:15px;
+}
+
+.title{
+    font-size:20px;
+}
+
+.demo{
+    background:#ff3040;
+    color:white;
+    text-align:center;
+    padding:8px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.balance{
+    text-align:center;
+    padding:30px 15px 20px;
+}
+
+.balance-small{
+    color:#777;
+    font-size:14px;
+}
+
+.balance-number{
+    font-size:28px;
+    font-weight:bold;
+    margin:12px 0;
+}
+
+.coin{
+    color:#e5a900;
+}
+
+.available{
+    color:#777;
+    font-size:13px;
+}
+
+.form{
+    padding:10px 20px;
+}
+
+.label{
+    font-weight:bold;
+    margin:15px 0 8px;
+}
+
+.input{
+    width:100%;
+    height:50px;
+    border:0;
+    background:#f3f3f5;
+    border-radius:10px;
+    padding:0 15px;
+    font-size:16px;
+    outline:none;
+}
+
+/* PROFILE */
+
+.profile{
+    display:none;
+    align-items:center;
+    gap:12px;
+    margin-top:12px;
+    padding:12px;
+    background:#f5f5f5;
+    border-radius:12px;
+}
+
+.avatar{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    overflow:hidden;
+    background:#222;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:bold;
+    flex-shrink:0;
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.profile-info{
+    text-align:left;
+    min-width:0;
+}
+
+.name{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.username{
+    color:#777;
+    font-size:14px;
+    margin-top:4px;
+}
+
+.followers{
+    color:#777;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.profile-link{
+    display:block;
+    margin-top:6px;
+    color:#1677ff;
+    font-size:12px;
+    text-decoration:none;
+}
+
+/* COINS */
+
+.coin-options{
+    display:flex;
+    gap:8px;
+}
+
+.coin-box{
+    flex:1;
+    padding:14px 5px;
+    text-align:center;
+    border:1px solid #ddd;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.coin-box.selected{
+    border:2px solid #ff3040;
+}
+
+.coin-number{
+    font-weight:bold;
+}
+
+.price{
+    color:#777;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.exchange{
+    width:calc(100% - 40px);
+    height:52px;
+    margin:25px 20px;
+    border:0;
+    border-radius:8px;
+    background:#ff3040;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* RESULT */
+
+.result{
+    display:none;
+    padding:35px 20px;
+    text-align:center;
+}
+
+.success{
+    width:75px;
+    height:75px;
+    margin:auto;
+    background:#16c83a;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+}
+
+.result h2{
+    margin:20px 0 30px;
+}
+
+.details{
+    text-align:left;
+    border-top:1px solid #ddd;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:17px 0;
+    border-bottom:1px solid #eee;
+}
+
+.row span:first-child{
+    color:#777;
+}
+
+.row span:last-child{
+    font-weight:bold;
+    text-align:right;
+}
+
+.back-button{
+    width:100%;
+    height:50px;
+    margin-top:30px;
+    border:0;
+    border-radius:8px;
+    background:#222;
+    color:white;
+    font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+    <div class="header">
+        <div class="back">‹</div>
+        <div class="title">Exchange</div>
+    </div>
+
+    <div class="real">
+      <center> TIKTOK TRANSACTION</center>
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div id="mainPage">
+
+        <div class="balance">
+
+            <div class="balance-small">
+                
+            </div>
+
+            <div class="balance-number">
+                <span class="coin">●</span>
+                <span id="balanceText">
+                    856,915,599,207
+                </span>
+            </div>
+
+            <div class="available">
+                Available balance
+            </div>
+
+        </div>
+
+
+        <div class="form">
+
+            <div class="label">
+                TikTok Username
+            </div>
+
+            <input
+                id="usernameInput"
+                class="input"
+                type="text"
+                placeholder=""
+                oninput="showProfile()"
+            >
+
+
+            <!-- PROFILE -->
+
+            <div id="profile" class="profile">
+
+                <div class="avatar" id="avatar"></div>
+
+                <div class="profile-info">
+
+                    <div id="profileName" class="name"></div>
+
+                    <div id="profileUsername" class="username"></div>
+
+                    <div id="profileFollowers"
+                         class="followers">
+                    </div>
+
+                    <a id="profileLink"
+                       class="profile-link"
+                       href="#"
+                       target="_blank">
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="label">
+                Select Coins
+            </div>
+
+
+            <div class="coin-options">
+
+                <div class="coin-box"
+                     onclick="selectCoin(this,250,3.03)">
+                    <div class="coin-number">🪙 250</div>
+                    <div class="price">$3.03</div>
+                </div>
+
+                <div class="coin-box"
+                     onclick="selectCoin(this,500,6.07)">
+                    <div class="coin-number">🪙 500</div>
+                    <div class="price">$6.07</div>
+                </div>
+
+                <div class="coin-box"
+                     onclick="selectCoin(this,15000,182.04)">
+                    <div class="coin-number">🪙 15,000</div>
+                    <div class="price">$182.04</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button class="exchange"
+                onclick="exchangeCoins()">
+            Exchange  Coins
+        </button>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div id="resultPage" class="result">
+
+        <div class="success">✓</div>
+
+        <h2>Exchange Completed!</h2>
+
+        <div class="details">
+
+            <div class="row">
+                <span>Recipient</span>
+                <span id="resultUsername"></span>
+            </div>
+
+            <div class="row">
+                <span>Coins</span>
+                <span id="resultCoins"></span>
+            </div>
+
+            <div class="row">
+                <span> Value</span>
+                <span id="resultPrice"></span>
+            </div>
+
+            <div class="row">
+                <span>Remaining Balance</span>
+                <span id="remainingBalance"></span>
+            </div>
+
+            <div class="row">
+                <span>Status</span>
+                <span style="color:#16c83a">
+                    
+                </span>
+            </div>
+
+        </div>
+
+        <button class="back-button"
+                onclick="goBack()">
+            ← Back
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+====================================================
+FRIENDS DATABASE
+PUT YOUR FRIEND'S PHOTO URL HERE
+====================================================
+*/
+
+const friends = {
+
+    "amanbayani": {
+        name: "Amanbayani",
+
+        photo:
+        "https://i.pravatar.cc/300?img=12",
+
+        followers: "TikTok Profile",
+
+        tiktok:
+        "https://www.tiktok.com/@amanbayani"
+    },
+
+
+    "rahul123": {
+        name: "Rahul",
+
+        photo:
+        "https://i.pravatar.cc/300?img=11",
+
+        followers: "TikTok Profile",
+
+        tiktok:
+        "https://www.tiktok.com/@rahul123"
+    },
+
+
+    "rohit456": {
+        name: "Rohit",
+
+        photo:
+        "https://i.pravatar.cc/300?img=13",
+
+        followers: "TikTok Profile",
+
+        tiktok:
+        "https://www.tiktok.com/@rohit456"
+    },
+
+
+    "sandeep01": {
+        name: "Sandeep",
+
+        photo:
+        "https://i.pravatar.cc/300?img=14",
+
+        followers: "TikTok Profile",
+
+        tiktok:
+        "https://www.tiktok.com/@sandeep01"
+    }
+
+};
+
+
+/*
+====================================================
+BALANCE
+====================================================
+*/
+
+let balance = 856915599207;
+
+let selectedCoins = 0;
+
+let selectedPrice = 0;
+
+
+/*
+====================================================
+SHOW PROFILE
+====================================================
+*/
+
+function showProfile(){
+
+    let input =
+        document
+        .getElementById("usernameInput")
+        .value
+        .trim()
+        .toLowerCase();
+
+    let profile =
+        document.getElementById("profile");
+
+
+    if(input.length < 2){
+
+        profile.style.display = "none";
+
+        return;
+    }
+
+
+    /* Remove @ */
+
+    let username =
+        input.replace(/^@+/, "");
+
+
+    /*
+    Find friend
+    */
+
+    let friend =
+        friends[username];
+
+
+    /*
+    FRIEND FOUND
+    */
+
+    if(friend){
+
+        document
+        .getElementById("avatar")
+        .innerHTML =
+        `<img src="${friend.photo}"
+              alt="${friend.name}">`;
+
+
+        document
+        .getElementById("profileName")
+        .innerText =
+        friend.name;
+
+
+        document
+        .getElementById("profileUsername")
+        .innerText =
+        "@" + username;
+
+
+        document
+        .getElementById("profileFollowers")
+        .innerText =
+        friend.followers;
+
+
+        document
+        .getElementById("profileLink")
+        .href =
+        friend.tiktok;
+
+
+        document
+        .getElementById("profileLink")
+        .innerText =
+        "Open TikTok Profile";
+
+
+        profile.style.display = "flex";
+
+    }
+
+
+    /*
+    UNKNOWN USER
+    */
+
+    else{
+
+        let firstLetter =
+            username
+            .charAt(0)
+            .toUpperCase();
+
+
+        document
+        .getElementById("avatar")
+        .innerHTML =
+        `<span>${firstLetter}</span>`;
+
+
+        document
+        .getElementById("profileName")
+        .innerText =
+        firstLetter +
+        username.slice(1);
+
+
+        document
+        .getElementById("profileUsername")
+        .innerText =
+        "@" + username;
+
+
+        document
+        .getElementById("profileFollowers")
+        .innerText =
+        "TikTok Profile ";
+
+
+        document
+        .getElementById("profileLink")
+        .href =
+        "https://www.tiktok.com/@" +
+        encodeURIComponent(username);
+
+
+        document
+        .getElementById("profileLink")
+        .innerText =
+        "Open TikTok Profile";
+
+
+        profile.style.display = "flex";
+    }
+}
+
+
+/*
+====================================================
+SELECT COINS
+====================================================
+*/
+
+function selectCoin(element,coins,price){
+
+    document
+    .querySelectorAll(".coin-box")
+    .forEach(function(box){
+
+        box.classList.remove("selected");
+
+    });
+
+
+    element.classList.add("selected");
+
+    selectedCoins = coins;
+
+    selectedPrice = price;
+}
+
+
+/*
+====================================================
+EXCHANGE
+====================================================
+*/
+
+function exchangeCoins(){
+
+    let username =
+        document
+        .getElementById("usernameInput")
+        .value
+        .trim();
+
+
+    if(username === ""){
+
+        alert("Please enter a username.");
+
+        return;
+    }
+
+
+    if(selectedCoins === 0){
+
+        alert("Please select coins.");
+
+        return;
+    }
+
+
+    if(selectedCoins > balance){
+
+        alert("Insufficient balance.");
+
+        return;
+    }
+
+
+    balance -= selectedCoins;
+
+
+    if(!username.startsWith("@")){
+
+        username = "@" + username;
+
+    }
+
+
+    document
+    .getElementById("resultUsername")
+    .innerText =
+    username;
+
+
+    document
+    .getElementById("resultCoins")
+    .innerText =
+    selectedCoins.toLocaleString()
+    + "  Coins";
+
+
+    document
+    .getElementById("resultPrice")
+    .innerText =
+    "$" + selectedPrice.toFixed(2);
+
+
+    document
+    .getElementById("remainingBalance")
+    .innerText =
+    balance.toLocaleString();
+
+
+    document
+    .getElementById("balanceText")
+    .innerText =
+    balance.toLocaleString();
+
+
+    document
+    .getElementById("mainPage")
+    .style.display =
+    "none";
+
+
+    document
+    .getElementById("resultPage")
+    .style.display =
+    "block";
+}
+
+
+/*
+====================================================
+BACK
+====================================================
+*/
+
+function goBack(){
+
+    document
+    .getElementById("resultPage")
+    .style.display =
+    "none";
+
+
+    document
+    .getElementById("mainPage")
+    .style.display =
+    "block";
+}
+
+</script>
+
+</body>
+</html>
